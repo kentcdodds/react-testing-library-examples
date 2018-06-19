@@ -2,7 +2,9 @@ import React from 'react'
 import {withRouter} from 'react-router'
 import {Link, Route, Router, Switch} from 'react-router-dom'
 import {createMemoryHistory} from 'history'
-import {render, Simulate} from 'react-testing-library'
+import {render, fireEvent, cleanup} from 'react-testing-library'
+
+afterEach(cleanup)
 
 const About = () => <div>You are on the about page</div>
 const Home = () => <div>You are home</div>
@@ -49,7 +51,7 @@ test('full app rendering/navigating', () => {
   // normally I'd use a data-testid, but just wanted to show this is also possible
   expect(container.innerHTML).toMatch('You are home')
   const leftClick = {button: 0}
-  Simulate.click(getByText(/about/i), leftClick)
+  fireEvent.click(getByText(/about/i), leftClick)
   // normally I'd use a data-testid, but just wanted to show this is also possible
   expect(container.innerHTML).toMatch('You are on the about page')
 })
