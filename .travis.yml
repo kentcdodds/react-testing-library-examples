@@ -7,7 +7,9 @@ notifications:
   email: false
 node_js: '8'
 install: npm install
-script: npm test
+script:
+- npm test
+- npm run build
 after_success: npx codecov
 branches:
   only: master
