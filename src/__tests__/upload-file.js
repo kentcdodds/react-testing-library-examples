@@ -1,3 +1,4 @@
+import 'jest-dom/extend-expect'
 import React, {Component} from 'react'
 import {render, cleanup, fireEvent} from 'react-testing-library'
 
@@ -18,7 +19,7 @@ class UploadFile extends Component {
   render() {
     return (
       <div>
-        <label for="upload-file">Upload File</label>
+        <label htmlFor="upload-file">Upload File</label>
         <input
           type="file"
           id="upload-file"
@@ -36,7 +37,7 @@ class UploadFile extends Component {
 }
 
 test('Show the uploaded file name after the user uploads a file', () => {
-  const {getByLabelText, getByText} = render(<UploadFile />)
+  const {getByLabelText, getByText, container} = render(<UploadFile />)
 
   const file = new File(['(⌐□_□)'], 'chucknorris.png', {
     type: 'image/png',
@@ -63,5 +64,5 @@ test('Show the uploaded file name after the user uploads a file', () => {
   // https://github.com/kentcdodds/react-testing-library#fireeventeventnamenode-htmlelement-eventproperties-object
   fireEvent.change(inputEl)
 
-  getByText('You have uploaded a file named chucknorris.png')
+  expect(container).toContainElement(getByText(/chucknorris\.png/))
 })
