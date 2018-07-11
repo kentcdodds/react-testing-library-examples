@@ -1,8 +1,7 @@
 {
   "name": "react-testing-library-examples",
   "version": "1.0.0",
-  "description":
-    "A repo full of examples of how to use react-testing-library and test your react components",
+  "description": "A repo full of examples of how to use react-testing-library and test your react components",
   "keywords": [],
   "main": "src/index.js",
   "dependencies": {
@@ -29,6 +28,21 @@
     "extends": "react-app"
   },
   "babel": {
-    "presets": ["react-app"]
+    "presets": [
+      "react-app"
+    ]
+  },
+  "browserslist": {
+    "development": [
+      "last 2 chrome versions",
+      "last 2 firefox versions",
+      "last 2 edge versions"
+    ],
+    "production": [
+      ">1%",
+      "last 4 versions",
+      "Firefox ESR",
+      "not ie < 11"
+    ]
   }
 }
