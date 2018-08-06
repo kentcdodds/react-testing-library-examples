@@ -11,7 +11,6 @@ class SignIn extends React.Component {
   }
 
   onPasswordChange = e => {
-    console.log('password change', e.target.value)
     this.setState({password: e.target.value})
   }
 
