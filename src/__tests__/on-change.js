@@ -48,4 +48,5 @@ test('checkboxes (and radios) must use click', () => {
   // learn more: https://github.com/kentcdodds/react-testing-library/issues/156
   fireEvent.click(checkbox)
   expect(handleChange).toHaveBeenCalledTimes(1)
+  expect(checkbox.checked).toBe(true)
 })
