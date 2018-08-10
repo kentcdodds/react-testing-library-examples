@@ -38,3 +38,14 @@ test('sets the value to the upper version of the value', () => {
   fireEvent.change(upperInput, {target: {value: upper}})
   expect(upperInput.value).toEqual(upper.toUpperCase())
 })
+
+test('checkboxes (and radios) must use click', () => {
+  const handleChange = jest.fn()
+  const {container} = render(<input type="checkbox" onChange={handleChange} />)
+  const checkbox = container.firstChild
+  // for checkboxes, the event that's fired is the click event,
+  // and that causes the change event handler to be called.
+  // learn more: https://github.com/kentcdodds/react-testing-library/issues/156
+  fireEvent.click(checkbox)
+  expect(handleChange).toHaveBeenCalledTimes(1)
+})
