@@ -4,6 +4,7 @@ import {render, fireEvent, waitForElement} from 'react-testing-library'
 import 'jest-dom/extend-expect'
 
 class Fetch extends React.Component {
+  static defaultProps = {axios}
   state = {}
   componentDidUpdate(prevProps) {
     if (this.props.url !== prevProps.url) {
@@ -11,7 +12,7 @@ class Fetch extends React.Component {
     }
   }
   fetch = async () => {
-    const response = await axios.get(this.props.url)
+    const response = await this.props.axios.get(this.props.url)
     this.setState({data: response.data})
   }
   render() {
@@ -25,18 +26,19 @@ class Fetch extends React.Component {
   }
 }
 
-jest.mock('axios', () => ({get: jest.fn()}))
-
 test('Fetch makes an API call and displays the greeting', async () => {
-  axios.get.mockResolvedValueOnce({data: {greeting: 'hello there'}})
+  const fakeAxios = {get: jest.fn()}
+  fakeAxios.get.mockResolvedValueOnce({data: {greeting: 'hello there'}})
   const url = 'https://example.com/get-hello-there'
-  const {container, getByText, getByTestId} = render(<Fetch url={url} />)
+  const {container, getByText, getByTestId} = render(
+    <Fetch url={url} axios={fakeAxios} />,
+  )
   fireEvent.click(getByText(/fetch/i))
 
   const greetingNode = await waitForElement(() => getByTestId('greeting'))
 
-  expect(axios.get).toHaveBeenCalledTimes(1)
-  expect(axios.get).toHaveBeenCalledWith(url)
+  expect(fakeAxios.get).toHaveBeenCalledTimes(1)
+  expect(fakeAxios.get).toHaveBeenCalledWith(url)
   expect(greetingNode).toHaveTextContent('hello there')
 
   // oh, ans snapshots work:
