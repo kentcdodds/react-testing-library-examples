@@ -1,6 +1,5 @@
-// this is similar to __local_tests__/async-with-mock.js
-// except this one uses a form of dependency injection because
-// jest.mock is not available in codesandbox
+// this is similar to the __tests__/async.js file
+// except this one uses jest.mock (which is not available in codesandbox).
 import React from 'react'
 import axios from 'axios'
 import {render, fireEvent, waitForElement, cleanup} from 'react-testing-library'
@@ -8,8 +7,9 @@ import 'jest-dom/extend-expect'
 
 afterEach(cleanup)
 
+jest.mock('axios', () => ({get: jest.fn()}))
+
 class Fetch extends React.Component {
-  static defaultProps = {axios}
   state = {}
   componentDidUpdate(prevProps) {
     if (this.props.url !== prevProps.url) {
@@ -17,7 +17,7 @@ class Fetch extends React.Component {
     }
   }
   fetch = async () => {
-    const response = await this.props.axios.get(this.props.url)
+    const response = await axios.get(this.props.url)
     this.setState({data: response.data})
   }
   render() {
@@ -32,16 +32,14 @@ class Fetch extends React.Component {
 }
 
 test('Fetch makes an API call and displays the greeting', async () => {
-  const fakeAxios = {
-    get: jest.fn(() => Promise.resolve({data: {greeting: 'hello there'}})),
-  }
+  axios.get.mockResolvedValueOnce({data: {greeting: 'hello there'}})
   const url = 'https://example.com/get-hello-there'
-  const {getByText, getByTestId} = render(<Fetch url={url} axios={fakeAxios} />)
+  const {getByText, getByTestId} = render(<Fetch url={url} />)
   fireEvent.click(getByText(/fetch/i))
 
   const greetingNode = await waitForElement(() => getByTestId('greeting'))
 
-  expect(fakeAxios.get).toHaveBeenCalledTimes(1)
-  expect(fakeAxios.get).toHaveBeenCalledWith(url)
+  expect(axios.get).toHaveBeenCalledTimes(1)
+  expect(axios.get).toHaveBeenCalledWith(url)
   expect(greetingNode).toHaveTextContent('hello there')
 })
