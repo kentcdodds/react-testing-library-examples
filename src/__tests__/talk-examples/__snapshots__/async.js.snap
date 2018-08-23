@@ -1,0 +1,14 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Fetch makes an API call and displays the greeting 1`] = `
+<div>
+  <button>
+    Fetch
+  </button>
+  <span
+    data-testid="greeting"
+  >
+    hello there
+  </span>
+</div>
+`;

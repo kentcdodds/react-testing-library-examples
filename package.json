@@ -5,6 +5,7 @@
   "keywords": [],
   "main": "src/index.js",
   "dependencies": {
+    "axios": "^0.18.0",
     "history": "^4.7.2",
     "jest-dom": "^1.7.0",
     "react": "^16.4.1",
