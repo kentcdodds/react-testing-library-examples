@@ -1,7 +1,10 @@
-// watch me write this test in 16 minutes on YouTube:
-//   https://www.youtube.com/watch?v=dxWrHEOD5DU&list=PLV5CVI1eNcJgCrPH_e6d57KRUTiDZgs0u
+// normally you'll put this in a setup file (like src/setupTests.js in create-react-app)
+// but we'll do it here for copy/paste-ability :)
 import 'react-testing-library/cleanup-after-each'
 import 'jest-dom/extend-expect'
+
+// watch me write this test in 16 minutes on YouTube:
+//   https://www.youtube.com/watch?v=dxWrHEOD5DU&list=PLV5CVI1eNcJgCrPH_e6d57KRUTiDZgs0u
 import React from 'react'
 import {render, fireEvent} from 'react-testing-library'
 import {reportError} from '../utils'

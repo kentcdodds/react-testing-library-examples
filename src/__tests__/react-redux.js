@@ -1,10 +1,12 @@
+// normally you'll put this in a setup file (like src/setupTests.js in create-react-app)
+// but we'll do it here for copy/paste-ability :)
+import 'react-testing-library/cleanup-after-each'
 import 'jest-dom/extend-expect'
+
 import React from 'react'
 import {createStore} from 'redux'
 import {Provider, connect} from 'react-redux'
-import {render, fireEvent, cleanup} from 'react-testing-library'
-
-afterEach(cleanup)
+import {render, fireEvent} from 'react-testing-library'
 
 // counter.js
 class Counter extends React.Component {

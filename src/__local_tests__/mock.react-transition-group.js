@@ -1,6 +1,11 @@
+// normally you'll put this in a setup file (like src/setupTests.js in create-react-app)
+// but we'll do it here for copy/paste-ability :)
+import 'react-testing-library/cleanup-after-each'
+import 'jest-dom/extend-expect'
+
 import React from 'react'
 import {CSSTransition} from 'react-transition-group'
-import {render, fireEvent, cleanup} from 'react-testing-library'
+import {render, fireEvent} from 'react-testing-library'
 
 function Fade({children, ...props}) {
   return (
@@ -27,13 +32,10 @@ class HiddenMessage extends React.Component {
   }
 }
 
-afterEach(cleanup)
-
 jest.mock('react-transition-group', () => {
   const FakeTransition = jest.fn(({children}) => children)
-  const FakeCSSTransition = jest.fn(
-    props =>
-      props.in ? <FakeTransition>{props.children}</FakeTransition> : null,
+  const FakeCSSTransition = jest.fn(props =>
+    props.in ? <FakeTransition>{props.children}</FakeTransition> : null,
   )
   return {CSSTransition: FakeCSSTransition, Transition: FakeTransition}
 })

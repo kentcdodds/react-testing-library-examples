@@ -1,12 +1,14 @@
+// normally you'll put this in a setup file (like src/setupTests.js in create-react-app)
+// but we'll do it here for copy/paste-ability :)
+import 'react-testing-library/cleanup-after-each'
+import 'jest-dom/extend-expect'
+
 // this is similar to __local_tests__/async-with-mock.js
 // except this one uses a form of dependency injection because
 // jest.mock is not available in codesandbox
 import React from 'react'
 import axios from 'axios'
-import {render, fireEvent, waitForElement, cleanup} from 'react-testing-library'
-import 'jest-dom/extend-expect'
-
-afterEach(cleanup)
+import {render, fireEvent, waitForElement} from 'react-testing-library'
 
 class Fetch extends React.Component {
   static defaultProps = {axios}

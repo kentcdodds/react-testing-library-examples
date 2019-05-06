@@ -1,8 +1,10 @@
+// normally you'll put this in a setup file (like src/setupTests.js in create-react-app)
+// but we'll do it here for copy/paste-ability :)
+import 'react-testing-library/cleanup-after-each'
 import 'jest-dom/extend-expect'
-import React, {Component} from 'react'
-import {render, cleanup, fireEvent} from 'react-testing-library'
 
-afterEach(cleanup)
+import React, {Component} from 'react'
+import {render, fireEvent} from 'react-testing-library'
 
 class UploadFile extends Component {
   state = {

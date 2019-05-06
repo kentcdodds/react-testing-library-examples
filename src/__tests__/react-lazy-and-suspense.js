@@ -1,8 +1,10 @@
+// normally you'll put this in a setup file (like src/setupTests.js in create-react-app)
+// but we'll do it here for copy/paste-ability :)
+import 'react-testing-library/cleanup-after-each'
 import 'jest-dom/extend-expect'
-import React from 'react'
-import {render, waitForElement, cleanup} from 'react-testing-library'
 
-afterEach(cleanup)
+import React from 'react'
+import {render, waitForElement} from 'react-testing-library'
 
 const LazyComponent = React.lazy(() => import('../lazy-component'))
 
