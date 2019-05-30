@@ -1,13 +1,8 @@
-// normally you'll put this in a setup file (like src/setupTests.js in create-react-app)
-// but we'll do it here for copy/paste-ability :)
-import 'react-testing-library/cleanup-after-each'
-import 'jest-dom/extend-expect'
-
 // this is similar to the __tests__/async.js file
 // except this one uses jest.mock (which is not available in codesandbox).
 import React from 'react'
 import axios from 'axios'
-import {render, fireEvent, waitForElement} from 'react-testing-library'
+import {render, fireEvent, waitForElement} from '@testing-library/react'
 
 jest.mock('axios', () => ({get: jest.fn()}))
 

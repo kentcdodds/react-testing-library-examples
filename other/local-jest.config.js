@@ -5,4 +5,5 @@ module.exports = {
   displayName: 'local',
   testMatch: ['**/__local_tests__/**/*.js'],
   testURL: 'http://localhost',
+  setupFilesAfterEnv: [path.resolve(__dirname, '../src/setupTests.js')],
 }

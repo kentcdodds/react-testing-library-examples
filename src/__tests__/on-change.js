@@ -1,10 +1,5 @@
-// normally you'll put this in a setup file (like src/setupTests.js in create-react-app)
-// but we'll do it here for copy/paste-ability :)
-import 'react-testing-library/cleanup-after-each'
-import 'jest-dom/extend-expect'
-
 import React from 'react'
-import {render, fireEvent} from 'react-testing-library'
+import {render, fireEvent} from '@testing-library/react'
 
 class UpperInput extends React.Component {
   state = {upper: ''}
@@ -49,7 +44,7 @@ test('checkboxes (and radios) must use click', () => {
   const checkbox = container.firstChild
   // for checkboxes, the event that's fired is the click event,
   // and that causes the change event handler to be called.
-  // learn more: https://github.com/kentcdodds/react-testing-library/issues/156
+  // learn more: https://github.com/testing-library/react-testing-library/issues/156
   fireEvent.click(checkbox)
   expect(handleChange).toHaveBeenCalledTimes(1)
   expect(checkbox.checked).toBe(true)

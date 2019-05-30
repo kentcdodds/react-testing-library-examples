@@ -1,11 +1,6 @@
-// normally you'll put this in a setup file (like src/setupTests.js in create-react-app)
-// but we'll do it here for copy/paste-ability :)
-import 'react-testing-library/cleanup-after-each'
-import 'jest-dom/extend-expect'
-
 import React from 'react'
 import {withRouter} from 'react-router'
-import {render} from 'react-testing-library'
+import {render} from '@testing-library/react'
 
 // pretend this is in another file, and we:
 // import {LocationDisplay} from './location-display'

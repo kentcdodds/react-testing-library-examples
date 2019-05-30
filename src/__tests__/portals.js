@@ -1,11 +1,6 @@
-// normally you'll put this in a setup file (like src/setupTests.js in create-react-app)
-// but we'll do it here for copy/paste-ability :)
-import 'react-testing-library/cleanup-after-each'
-import 'jest-dom/extend-expect'
-
 import React from 'react'
 import ReactDOM from 'react-dom'
-import {render, fireEvent} from 'react-testing-library'
+import {render, fireEvent} from '@testing-library/react'
 
 // this is only here for HMR/codesandbox purposes
 // in a real scenario, you'd probably just do the stuff
