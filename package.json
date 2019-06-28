@@ -8,9 +8,15 @@
     "@testing-library/react": "^8.0.0",
     "axios": "^0.18.0",
     "history": "^4.9.0",
+    "i18next": "17.0.4",
+    "i18next-browser-languagedetector": "3.0.1",
+    "i18next-xhr-backend": "3.0.0",
+    "intl": "^1.2.5",
     "jest-dom": "^3.1.3",
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
+    "react-i18next": "^10.11.2",
+    "react-intl": "^2.9.0",
     "react-redux": "^7.0.2",
     "react-router": "^5.0.0",
     "react-router-dom": "^5.0.0",
@@ -29,7 +35,9 @@
     "extends": "react-app"
   },
   "babel": {
-    "presets": ["react-app"]
+    "presets": [
+      "react-app"
+    ]
   },
   "browserslist": {
     "development": [
@@ -37,6 +45,11 @@
       "last 2 firefox versions",
       "last 2 edge versions"
     ],
-    "production": [">1%", "last 4 versions", "Firefox ESR", "not ie < 11"]
+    "production": [
+      ">1%",
+      "last 4 versions",
+      "Firefox ESR",
+      "not ie < 11"
+    ]
   }
 }
