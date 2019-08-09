@@ -1,10 +1,14 @@
-import React, {Fragment} from 'react'
-import {initReactI18next, I18nextProvider, Trans} from 'react-i18next'
+import React from 'react'
+import {
+  initReactI18next,
+  I18nextProvider,
+  Trans,
+  withTranslation,
+} from 'react-i18next'
 import i18n from 'i18next'
 import Backend from 'i18next-xhr-backend'
 import LanguageDetector from 'i18next-browser-languagedetector'
-import {render, cleanup, getByTestId, fireEvent} from '@testing-library/react'
-import 'jest-dom/extend-expect'
+import {render as rtlRender, fireEvent} from '@testing-library/react'
 
 const resources = {
   en: {
@@ -35,57 +39,38 @@ i18n
     },
   })
 
-const renderWithi18next = Component => {
-  let rerender = () => {}
-  const Comp = React.cloneElement(Component, {
-    changeLanguage: lng => {
-      i18n.changeLanguage(lng)
-      rerender(<I18nextProvider i18n={i18n}>{Comp}</I18nextProvider>)
-    },
-  })
-  const defaultRender = render(
-    <I18nextProvider i18n={i18n}>{Comp}</I18nextProvider>,
-  )
-  rerender = defaultRender.rerender
-  return defaultRender
-}
-
-const MainView = props => {
+const MainView = withTranslation()(props => {
   return (
-    <Fragment>
+    <React.Fragment>
       <div className="App-header">
-        <button
-          data-testid="pt-trans"
-          onClick={() => props.changeLanguage('pt')}
-        >
-          pt
-        </button>
-        <button
-          data-testid="en-trans"
-          onClick={() => props.changeLanguage('en')}
-        >
-          en
-        </button>
+        <button onClick={() => props.i18n.changeLanguage('pt')}>pt</button>
+        <button onClick={() => props.i18n.changeLanguage('en')}>en</button>
       </div>
-      <h1 data-testid="text-trans">
+      <h1>
         <Trans>Welcome to React</Trans>
       </h1>
-    </Fragment>
+    </React.Fragment>
   )
+})
+
+function render(ui, options) {
+  function Wrapper({children}) {
+    return <I18nextProvider i18n={i18n}>{children}</I18nextProvider>
+  }
+  return {
+    ...rtlRender(ui, {wrapper: Wrapper, ...options}),
+  }
 }
 
-afterEach(cleanup)
+test('it should test lang', () => {
+  const {getByRole, getByText} = render(<MainView useSuspense={false} />)
+  const heading = getByRole('heading')
+  const pt = getByText('pt')
+  const en = getByText('en')
 
-describe('lets make some tests', () => {
-  test('it should test lang', () => {
-    const {container} = renderWithi18next(<MainView />)
-    expect(getByTestId(container, 'text-trans')).toBeDefined()
-    expect(getByTestId(container, 'text-trans')).toHaveTextContent(
-      'Welcome to React and react-i18next',
-    )
-    fireEvent.click(getByTestId(container, 'pt-trans'))
-    expect(getByTestId(container, 'text-trans')).toHaveTextContent(
-      'Bem vindo ao React e ao react-i18next',
-    )
-  })
+  expect(heading).toHaveTextContent('Welcome to React and react-i18next')
+  fireEvent.click(pt)
+  expect(heading).toHaveTextContent('Bem vindo ao React e ao react-i18next')
+  fireEvent.click(en)
+  expect(heading).toHaveTextContent('Welcome to React and react-i18next')
 })
