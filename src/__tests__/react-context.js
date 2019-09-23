@@ -7,7 +7,7 @@ import {NameContext, NameProvider, NameConsumer} from '../react-context'
  * matching provider
  */
 test('NameConsumer shows default value', () => {
-  const {getByText, unmount} = render(<NameConsumer />)
+  const {getByText} = render(<NameConsumer />)
   expect(getByText(/^My Name Is:/)).toHaveTextContent('My Name Is: Unknown')
 })
 

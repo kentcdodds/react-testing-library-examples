@@ -78,20 +78,15 @@ function renderWithRedux(
 }
 
 test('can render with redux with defaults', () => {
-  const {getByTestId, getByText, unmount, container} = renderWithRedux(
-    <ConnectedCounter />,
-  )
+  const {getByTestId, getByText} = renderWithRedux(<ConnectedCounter />)
   fireEvent.click(getByText('+'))
   expect(getByTestId('count-value')).toHaveTextContent('1')
 })
 
 test('can render with redux with custom initial state', () => {
-  const {getByTestId, getByText, unmount, container} = renderWithRedux(
-    <ConnectedCounter />,
-    {
-      initialState: {count: 3},
-    },
-  )
+  const {getByTestId, getByText} = renderWithRedux(<ConnectedCounter />, {
+    initialState: {count: 3},
+  })
   fireEvent.click(getByText('-'))
   expect(getByTestId('count-value')).toHaveTextContent('2')
 })
@@ -99,12 +94,9 @@ test('can render with redux with custom initial state', () => {
 test('can render with redux with custom store', () => {
   // this is a silly store that can never be changed
   const store = createStore(() => ({count: 1000}))
-  const {getByTestId, getByText, container, unmount} = renderWithRedux(
-    <ConnectedCounter />,
-    {
-      store,
-    },
-  )
+  const {getByTestId, getByText} = renderWithRedux(<ConnectedCounter />, {
+    store,
+  })
   fireEvent.click(getByText('+'))
   expect(getByTestId('count-value')).toHaveTextContent('1000')
   fireEvent.click(getByText('-'))
