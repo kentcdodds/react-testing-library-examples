@@ -2,17 +2,17 @@ import {render} from '@testing-library/react'
 import matchMediaPolyfill from 'mq-polyfill'
 import React from 'react'
 
-function WindowSize () {
+function WindowSize() {
   return (
     <div>
-      <label htmlFor='inner-width'>Inner Width</label>
-      <div id='inner-width'>{window.innerWidth}</div>
-      <label htmlFor='inner-height'>Inner Height</label>
-      <div id='inner-height'>{window.innerHeight}</div>
-      <label htmlFor='outer-width'>Outer Width</label>
-      <div id='outer-width'>{window.outerWidth}</div>
-      <label htmlFor='outer-height'>Outer Height</label>
-      <div id='outer-height'>{window.outerHeight}</div>
+      <label htmlFor="inner-width">Inner Width</label>
+      <div id="inner-width">{window.innerWidth}</div>
+      <label htmlFor="inner-height">Inner Height</label>
+      <div id="inner-height">{window.innerHeight}</div>
+      <label htmlFor="outer-width">Outer Width</label>
+      <div id="outer-width">{window.outerWidth}</div>
+      <label htmlFor="outer-height">Outer Height</label>
+      <div id="outer-height">{window.outerHeight}</div>
     </div>
   )
 }
@@ -27,7 +27,6 @@ beforeAll(() => {
       outerHeight: height,
     }).dispatchEvent(new this.Event('resize'))
   }
-  console.log('test')
 })
 
 test('shows default window size correctly', () => {
