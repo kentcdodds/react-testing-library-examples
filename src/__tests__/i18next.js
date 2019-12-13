@@ -8,7 +8,7 @@ import {
 import i18n from 'i18next'
 import Backend from 'i18next-xhr-backend'
 import LanguageDetector from 'i18next-browser-languagedetector'
-import {render as rtlRender, fireEvent} from '@testing-library/react'
+import {render as rtlRender, screen, fireEvent} from '@testing-library/react'
 
 const resources = {
   en: {
@@ -63,10 +63,10 @@ function render(ui, options) {
 }
 
 test('it should test lang', () => {
-  const {getByRole, getByText} = render(<MainView useSuspense={false} />)
-  const heading = getByRole('heading')
-  const pt = getByText('pt')
-  const en = getByText('en')
+  render(<MainView useSuspense={false} />)
+  const heading = screen.getByRole('heading')
+  const pt = screen.getByText('pt')
+  const en = screen.getByText('en')
 
   expect(heading).toHaveTextContent('Welcome to React and react-i18next')
   fireEvent.click(pt)

@@ -1,5 +1,5 @@
 import React from 'react'
-import {render, fireEvent} from '@testing-library/react'
+import {render, screen, fireEvent} from '@testing-library/react'
 
 class UpperInput extends React.Component {
   state = {upper: ''}
@@ -23,8 +23,8 @@ class UpperInput extends React.Component {
 }
 
 test('sets the value to the upper version of the value', () => {
-  const {getByLabelText} = render(<UpperInput />)
-  const upperInput = getByLabelText(/upper/i)
+  render(<UpperInput />)
+  const upperInput = screen.getByLabelText(/upper/i)
   const upper = 'stuff'
   // this is how you might be used to doing this to change the input value:
   // upperInput.value = upper

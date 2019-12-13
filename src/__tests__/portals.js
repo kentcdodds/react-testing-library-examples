@@ -1,6 +1,6 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
-import {render, fireEvent} from '@testing-library/react'
+import {render, screen, fireEvent} from '@testing-library/react'
 
 // this is only here for HMR/codesandbox purposes
 // in a real scenario, you'd probably just do the stuff
@@ -66,16 +66,16 @@ test('modal shows the children and a close button', () => {
   const handleClose = jest.fn()
 
   // Act
-  const {getByText} = render(
+  render(
     <Modal onClose={handleClose}>
       <div>test</div>
     </Modal>,
   )
   // Assert
-  expect(getByText('test')).toBeTruthy()
+  expect(screen.getByText('test')).toBeTruthy()
 
   // Act
-  fireEvent.click(getByText(/close/i))
+  fireEvent.click(screen.getByText(/close/i))
 
   // Assert
   expect(handleClose).toHaveBeenCalledTimes(1)

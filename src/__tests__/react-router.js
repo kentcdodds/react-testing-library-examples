@@ -2,7 +2,7 @@ import React from 'react'
 import {withRouter} from 'react-router'
 import {Link, Route, Router, Switch} from 'react-router-dom'
 import {createMemoryHistory} from 'history'
-import {render, fireEvent} from '@testing-library/react'
+import {render, screen, fireEvent} from '@testing-library/react'
 
 const About = () => <div>You are on the about page</div>
 const Home = () => <div>You are home</div>
@@ -45,11 +45,11 @@ function renderWithRouter(
 }
 
 test('full app rendering/navigating', () => {
-  const {container, getByText} = renderWithRouter(<App />)
+  const {container} = renderWithRouter(<App />)
   // normally I'd use a data-testid, but just wanted to show this is also possible
   expect(container.innerHTML).toMatch('You are home')
   const leftClick = {button: 0}
-  fireEvent.click(getByText(/about/i), leftClick)
+  fireEvent.click(screen.getByText(/about/i), leftClick)
   // normally I'd use a data-testid, but just wanted to show this is also possible
   expect(container.innerHTML).toMatch('You are on the about page')
 })
@@ -64,6 +64,6 @@ test('landing on a bad page', () => {
 
 test('rendering a component that uses withRouter', () => {
   const route = '/some-route'
-  const {getByTestId} = renderWithRouter(<LocationDisplay />, {route})
-  expect(getByTestId('location-display').textContent).toBe(route)
+  renderWithRouter(<LocationDisplay />, {route})
+  expect(screen.getByTestId('location-display').textContent).toBe(route)
 })

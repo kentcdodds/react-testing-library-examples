@@ -1,6 +1,10 @@
 import React from 'react'
 import {CSSTransition} from 'react-transition-group'
-import {render, fireEvent} from '@testing-library/react'
+import {render, fireEvent, screen} from '@testing-library/react'
+
+// NOTE: True shallow rendering is not possible with React Testing Library
+// This is by design: https://kcd.im/shallow
+// But mocking can be useful in some situations, so this is an example of that.
 
 function Fade({children, ...props}) {
   return (
@@ -33,7 +37,7 @@ jest.mock('react-transition-group', () => {
 })
 
 test('you can mock things with jest.mock', () => {
-  const {getByText} = render(<HiddenMessage initialShow={true} />)
+  render(<HiddenMessage initialShow={true} />)
   const context = expect.any(Object)
   const children = expect.any(Object)
   const defaultProps = {children, timeout: 1000, className: 'fade'}
@@ -41,7 +45,7 @@ test('you can mock things with jest.mock', () => {
     {in: true, ...defaultProps},
     context,
   )
-  fireEvent.click(getByText(/toggle/i))
+  fireEvent.click(screen.getByText(/toggle/i))
   expect(CSSTransition).toHaveBeenCalledWith(
     {in: true, ...defaultProps},
     context,

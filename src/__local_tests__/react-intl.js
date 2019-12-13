@@ -1,6 +1,6 @@
 import 'intl'
 import React from 'react'
-import {render as rtlRender} from '@testing-library/react'
+import {render as rtlRender, screen} from '@testing-library/react'
 import {IntlProvider, FormattedDate} from 'react-intl'
 
 const FormatDateView = () => {
@@ -30,6 +30,6 @@ function render(ui, options) {
 // even though we have the IntlPolyfill installed
 // I promise it is. Just try console.log(global.IntlPolyfill)
 test.skip('it should render FormattedDate and have a formated pt date', () => {
-  const {getByTestId} = render(<FormatDateView />)
-  expect(getByTestId('date-display')).toHaveTextContent('11/03/2019')
+  render(<FormatDateView />)
+  expect(screen.getByTestId('date-display')).toHaveTextContent('11/03/2019')
 })

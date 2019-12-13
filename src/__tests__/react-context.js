@@ -1,5 +1,5 @@
 import React from 'react'
-import {render} from '@testing-library/react'
+import {render, screen} from '@testing-library/react'
 import {NameContext, NameProvider, NameConsumer} from '../react-context'
 
 /**
@@ -7,8 +7,10 @@ import {NameContext, NameProvider, NameConsumer} from '../react-context'
  * matching provider
  */
 test('NameConsumer shows default value', () => {
-  const {getByText} = render(<NameConsumer />)
-  expect(getByText(/^My Name Is:/)).toHaveTextContent('My Name Is: Unknown')
+  render(<NameConsumer />)
+  expect(screen.getByText(/^My Name Is:/)).toHaveTextContent(
+    'My Name Is: Unknown',
+  )
 })
 
 /**
@@ -16,12 +18,12 @@ test('NameConsumer shows default value', () => {
  * wrap the tree with a matching provider
  */
 test('NameConsumer shows value from provider', () => {
-  const {getByText} = render(
+  render(
     <NameContext.Provider value="C3P0">
       <NameConsumer />
     </NameContext.Provider>,
   )
-  expect(getByText(/^My Name Is:/)).toHaveTextContent('My Name Is: C3P0')
+  expect(screen.getByText(/^My Name Is:/)).toHaveTextContent('My Name Is: C3P0')
 })
 
 /**
@@ -29,24 +31,26 @@ test('NameConsumer shows value from provider', () => {
  * consumer as the child
  */
 test('NameProvider composes full name from first, last', () => {
-  const {getByText} = render(
+  render(
     <NameProvider first="Boba" last="Fett">
       <NameContext.Consumer>
         {value => <span>Received: {value}</span>}
       </NameContext.Consumer>
     </NameProvider>,
   )
-  expect(getByText(/^Received:/).textContent).toBe('Received: Boba Fett')
+  expect(screen.getByText(/^Received:/).textContent).toBe('Received: Boba Fett')
 })
 
 /**
  * A tree containing both a providers and consumer can be rendered normally
  */
 test('NameProvider/Consumer shows name of character', () => {
-  const {getByText} = render(
+  render(
     <NameProvider first="Leia" last="Organa">
       <NameConsumer />
     </NameProvider>,
   )
-  expect(getByText(/^My Name Is:/).textContent).toBe('My Name Is: Leia Organa')
+  expect(screen.getByText(/^My Name Is:/).textContent).toBe(
+    'My Name Is: Leia Organa',
+  )
 })

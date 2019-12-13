@@ -1,7 +1,7 @@
 import React from 'react'
 import {createStore} from 'redux'
 import {Provider, connect} from 'react-redux'
-import {render, fireEvent} from '@testing-library/react'
+import {render, screen, fireEvent} from '@testing-library/react'
 
 // counter.js
 class Counter extends React.Component {
@@ -78,27 +78,27 @@ function renderWithRedux(
 }
 
 test('can render with redux with defaults', () => {
-  const {getByTestId, getByText} = renderWithRedux(<ConnectedCounter />)
-  fireEvent.click(getByText('+'))
-  expect(getByTestId('count-value')).toHaveTextContent('1')
+  renderWithRedux(<ConnectedCounter />)
+  fireEvent.click(screen.getByText('+'))
+  expect(screen.getByTestId('count-value')).toHaveTextContent('1')
 })
 
 test('can render with redux with custom initial state', () => {
-  const {getByTestId, getByText} = renderWithRedux(<ConnectedCounter />, {
+  renderWithRedux(<ConnectedCounter />, {
     initialState: {count: 3},
   })
-  fireEvent.click(getByText('-'))
-  expect(getByTestId('count-value')).toHaveTextContent('2')
+  fireEvent.click(screen.getByText('-'))
+  expect(screen.getByTestId('count-value')).toHaveTextContent('2')
 })
 
 test('can render with redux with custom store', () => {
   // this is a silly store that can never be changed
   const store = createStore(() => ({count: 1000}))
-  const {getByTestId, getByText} = renderWithRedux(<ConnectedCounter />, {
+  renderWithRedux(<ConnectedCounter />, {
     store,
   })
-  fireEvent.click(getByText('+'))
-  expect(getByTestId('count-value')).toHaveTextContent('1000')
-  fireEvent.click(getByText('-'))
-  expect(getByTestId('count-value')).toHaveTextContent('1000')
+  fireEvent.click(screen.getByText('+'))
+  expect(screen.getByTestId('count-value')).toHaveTextContent('1000')
+  fireEvent.click(screen.getByText('-'))
+  expect(screen.getByTestId('count-value')).toHaveTextContent('1000')
 })

@@ -2,7 +2,7 @@
 // except this one uses jest.mock (which is not available in codesandbox).
 import React from 'react'
 import axios from 'axios'
-import {render, fireEvent, waitForElement} from '@testing-library/react'
+import {render, fireEvent, screen} from '@testing-library/react'
 
 jest.mock('axios', () => ({get: jest.fn()}))
 
@@ -31,10 +31,10 @@ class Fetch extends React.Component {
 test('Fetch makes an API call and displays the greeting', async () => {
   axios.get.mockResolvedValueOnce({data: {greeting: 'hello there'}})
   const url = 'https://example.com/get-hello-there'
-  const {getByText, getByTestId} = render(<Fetch url={url} />)
-  fireEvent.click(getByText(/fetch/i))
+  render(<Fetch url={url} />)
+  fireEvent.click(screen.getByText(/fetch/i))
 
-  const greetingNode = await waitForElement(() => getByTestId('greeting'))
+  const greetingNode = await screen.findByTestId('greeting')
 
   expect(axios.get).toHaveBeenCalledTimes(1)
   expect(axios.get).toHaveBeenCalledWith(url)

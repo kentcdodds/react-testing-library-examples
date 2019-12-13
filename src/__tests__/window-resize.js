@@ -1,6 +1,6 @@
-import {render} from '@testing-library/react'
-import matchMediaPolyfill from 'mq-polyfill'
 import React from 'react'
+import matchMediaPolyfill from 'mq-polyfill'
+import {render, screen} from '@testing-library/react'
 
 function WindowSize() {
   return (
@@ -30,21 +30,21 @@ beforeAll(() => {
 })
 
 test('shows default window size correctly', () => {
-  const {getByLabelText} = render(<WindowSize />)
+  render(<WindowSize />)
 
-  expect(getByLabelText('Inner Width')).toHaveTextContent(1024)
-  expect(getByLabelText('Inner Height')).toHaveTextContent(768)
-  expect(getByLabelText('Outer Width')).toHaveTextContent(1024)
-  expect(getByLabelText('Outer Height')).toHaveTextContent(768)
+  expect(screen.getByLabelText('Inner Width')).toHaveTextContent(1024)
+  expect(screen.getByLabelText('Inner Height')).toHaveTextContent(768)
+  expect(screen.getByLabelText('Outer Width')).toHaveTextContent(1024)
+  expect(screen.getByLabelText('Outer Height')).toHaveTextContent(768)
 })
 
 test('shows modified window size correctly', () => {
   window.resizeTo(800, 300)
 
-  const {getByLabelText} = render(<WindowSize />)
+  render(<WindowSize />)
 
-  expect(getByLabelText('Inner Width')).toHaveTextContent(800)
-  expect(getByLabelText('Inner Height')).toHaveTextContent(300)
-  expect(getByLabelText('Outer Width')).toHaveTextContent(800)
-  expect(getByLabelText('Outer Height')).toHaveTextContent(300)
+  expect(screen.getByLabelText('Inner Width')).toHaveTextContent(800)
+  expect(screen.getByLabelText('Inner Height')).toHaveTextContent(300)
+  expect(screen.getByLabelText('Outer Width')).toHaveTextContent(800)
+  expect(screen.getByLabelText('Outer Height')).toHaveTextContent(300)
 })

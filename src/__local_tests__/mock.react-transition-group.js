@@ -1,6 +1,6 @@
 import React from 'react'
 import {CSSTransition} from 'react-transition-group'
-import {render, fireEvent} from '@testing-library/react'
+import {render, fireEvent, screen} from '@testing-library/react'
 
 function Fade({children, ...props}) {
   return (
@@ -36,12 +36,12 @@ jest.mock('react-transition-group', () => {
 })
 
 test('you can mock things with jest.mock', () => {
-  const {getByText, queryByText} = render(<HiddenMessage initialShow={true} />)
-  expect(getByText('Hello world')).toBeTruthy() // we just care it exists
+  render(<HiddenMessage initialShow={true} />)
+  expect(screen.getByText('Hello world')).toBeTruthy() // we just care it exists
   // hide the message
-  fireEvent.click(getByText('Toggle'))
+  fireEvent.click(screen.getByText('Toggle'))
   // in the real world, the CSSTransition component would take some time
   // before finishing the animation which would actually hide the message.
   // So we've mocked it out for our tests to make it happen instantly
-  expect(queryByText('Hello World')).toBeNull() // we just care it doesn't exist
+  expect(screen.queryByText('Hello World')).toBeNull() // we just care it doesn't exist
 })

@@ -1,7 +1,7 @@
 // watch me write this test in 16 minutes on YouTube:
 //   https://www.youtube.com/watch?v=dxWrHEOD5DU&list=PLV5CVI1eNcJgCrPH_e6d57KRUTiDZgs0u
 import React from 'react'
-import {render, fireEvent} from '@testing-library/react'
+import {render, fireEvent, screen} from '@testing-library/react'
 import {reportError} from '../utils'
 import {BombButton} from '../component-did-catch'
 
@@ -25,10 +25,10 @@ afterEach(() => {
 
 test('calls reportError and renders that there was a problem', () => {
   // Arrange
-  const {getByText, container} = render(<BombButton />)
+  render(<BombButton />)
 
   // Act
-  fireEvent.click(getByText('💣'))
+  fireEvent.click(screen.getByText('💣'))
 
   // Assert
   expect(reportError).toHaveBeenCalledTimes(1)
@@ -36,7 +36,7 @@ test('calls reportError and renders that there was a problem', () => {
   const info = {componentStack: expect.stringContaining('BombButton')}
   expect(reportError).toHaveBeenCalledWith(error, info)
 
-  expect(container).toHaveTextContent('There was a problem')
+  expect(screen.getByText(/there was a problem/i)).toBeInTheDocument()
 
   // by mocking out console.error we may inadvertantly be missing out on logs
   // in the future that could be important, so let's reduce that liklihood by

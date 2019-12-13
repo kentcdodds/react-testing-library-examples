@@ -1,6 +1,6 @@
 import React from 'react'
 import {withRouter} from 'react-router'
-import {render} from '@testing-library/react'
+import {render, screen} from '@testing-library/react'
 
 // pretend this is in another file, and we:
 // import {LocationDisplay} from './location-display'
@@ -16,6 +16,6 @@ jest.mock('react-router', () => ({
 
 test('displays location', () => {
   const pathname = '/some-route'
-  const {getByTestId} = render(<LocationDisplay location={{pathname}} />)
-  expect(getByTestId('location-display')).toHaveTextContent(pathname)
+  render(<LocationDisplay location={{pathname}} />)
+  expect(screen.getByTestId('location-display')).toHaveTextContent(pathname)
 })

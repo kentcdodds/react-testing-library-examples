@@ -1,5 +1,5 @@
 import React, {Component} from 'react'
-import {render, fireEvent} from '@testing-library/react'
+import {render, screen, fireEvent} from '@testing-library/react'
 
 class UploadFile extends Component {
   state = {
@@ -34,13 +34,13 @@ class UploadFile extends Component {
 }
 
 test('Show the uploaded file name after the user uploads a file', () => {
-  const {getByLabelText, getByText, container} = render(<UploadFile />)
-  const inputEl = getByLabelText(/upload file/i)
+  render(<UploadFile />)
+  const inputEl = screen.getByLabelText(/upload file/i)
 
   const file = new File(['(⌐□_□)'], 'chucknorris.png', {
     type: 'image/png',
   })
   fireEvent.change(inputEl, {target: {files: [file]}})
 
-  expect(container).toContainElement(getByText(/chucknorris\.png/))
+  expect(screen.getByText(/chucknorris\.png/)).toBeInTheDocument()
 })
