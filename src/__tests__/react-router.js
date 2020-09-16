@@ -1,15 +1,18 @@
 import React from 'react'
-import {withRouter} from 'react-router'
-import {Link, Route, BrowserRouter as Router, Switch} from 'react-router-dom'
+import {Link, Route, BrowserRouter as Router, Switch, useLocation} from 'react-router-dom'
 import {render, screen, fireEvent} from '@testing-library/react'
 
 const About = () => <div>You are on the about page</div>
 const Home = () => <div>You are home</div>
 const NoMatch = () => <div>No match</div>
 
-const LocationDisplay = withRouter(({location}) => (
-  <div data-testid="location-display">{location.pathname}</div>
-))
+const LocationDisplay = () => {
+  const location = useLocation()
+  
+  return (
+    <div data-testid="location-display">{location.pathname}</div>
+  )
+}
 
 function App() {
   return (
