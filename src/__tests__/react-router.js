@@ -6,7 +6,7 @@ const About = () => <div>You are on the about page</div>
 const Home = () => <div>You are home</div>
 const NoMatch = () => <div>No match</div>
 
-const LocationDisplay = ({location}) => {
+const LocationDisplay = () => {
   const location = useLocation()
   
   return (
