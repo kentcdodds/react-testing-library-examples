@@ -2,15 +2,13 @@
 // the basic idea is to simply call `render` again and provide the same container
 // that your first call created for you.
 
-import React, {useEffect, useState} from 'react'
+import React, {useState} from 'react'
 import {render, screen} from '@testing-library/react'
 
 let idCounter = 1
 
 const NumberDisplay = ({number}) => {
-  const [id, setId] = useState(idCounter++)
-  
-  useEffect(()=> { setId(idCounter++) }) // to ensure we don't remount a different instance
+  const [id, setId] = useState(idCounter++) // to ensure we don't remount a different instance
   
   return (
     <div>
