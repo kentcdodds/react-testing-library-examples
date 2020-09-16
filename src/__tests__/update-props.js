@@ -2,18 +2,18 @@
 // the basic idea is to simply call `render` again and provide the same container
 // that your first call created for you.
 
-import React, {useState} from 'react'
+import React, {useRef} from 'react'
 import {render, screen} from '@testing-library/react'
 
 let idCounter = 1
 
 const NumberDisplay = ({number}) => {
-  const [id, setId] = useState(idCounter++) // to ensure we don't remount a different instance
+  const id = useRef(idCounter++) // to ensure we don't remount a different instance
   
   return (
     <div>
       <span data-testid="number-display">{number}</span>
-      <span data-testid="instance-id">{id}</span>
+      <span data-testid="instance-id">{id.current}</span>
     </div>
   )
 }
