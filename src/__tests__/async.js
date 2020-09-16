@@ -1,44 +1,44 @@
-// this is similar to __local_tests__/async-with-mock.js
-// except this one uses a form of dependency injection because
-// jest.mock is not available in codesandbox
 import React from 'react'
-import axios from 'axios'
+import {rest} from 'msw'
+import {setupServer} from 'msw/node'
 import {render, fireEvent, screen} from '@testing-library/react'
+import '@testing-library/jest-dom/extend-expect'
+import Fetch from '../fetch'
 
-class Fetch extends React.Component {
-  static defaultProps = {axios}
-  state = {}
-  componentDidUpdate(prevProps) {
-    if (this.props.url !== prevProps.url) {
-      this.fetch()
-    }
-  }
-  fetch = async () => {
-    const response = await this.props.axios.get(this.props.url)
-    this.setState({data: response.data})
-  }
-  render() {
-    const {data} = this.state
-    return (
-      <div>
-        <button onClick={this.fetch}>Fetch</button>
-        {data ? <span data-testid="greeting">{data.greeting}</span> : null}
-      </div>
-    )
-  }
-}
+const server = setupServer(
+  rest.get('/greeting', (req, res, ctx) => {
+    return res(ctx.json({greeting: 'hello there'}))
+  }),
+)
 
-test('Fetch makes an API call and displays the greeting', async () => {
-  const fakeAxios = {
-    get: jest.fn(() => Promise.resolve({data: {greeting: 'hello there'}})),
-  }
-  const url = 'https://example.com/get-hello-there'
-  render(<Fetch url={url} axios={fakeAxios} />)
-  fireEvent.click(screen.getByText(/fetch/i))
+beforeAll(() => server.listen())
+afterEach(() => server.resetHandlers())
+afterAll(() => server.close())
 
-  const greetingNode = await screen.findByTestId('greeting')
+test('loads and displays greeting', async () => {
+  render(<Fetch url="/greeting" />)
 
-  expect(fakeAxios.get).toHaveBeenCalledTimes(1)
-  expect(fakeAxios.get).toHaveBeenCalledWith(url)
-  expect(greetingNode).toHaveTextContent('hello there')
+  fireEvent.click(screen.getByText('Load Greeting'))
+
+  await screen.findByRole('heading')
+
+  expect(screen.getByRole('heading')).toHaveTextContent('hello there')
+  expect(screen.getByRole('button')).toHaveAttribute('disabled')
+})
+
+test('handles server error', async () => {
+  server.use(
+    rest.get('/greeting', (req, res, ctx) => {
+      return res(ctx.status(500))
+    }),
+  )
+
+  render(<Fetch url="/greeting" />)
+
+  fireEvent.click(screen.getByText('Load Greeting'))
+
+  await screen.findByRole('alert')
+
+  expect(screen.getByRole('alert')).toHaveTextContent('Oops, failed to fetch!')
+  expect(screen.getByRole('button')).not.toHaveAttribute('disabled')
 })
