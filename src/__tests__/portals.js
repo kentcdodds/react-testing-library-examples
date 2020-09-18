@@ -1,6 +1,7 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
-import {render, screen, fireEvent} from '@testing-library/react'
+import {render, screen} from '@testing-library/react'
+import userEvent from '@testing-library/user-event'
 
 // this is only here for HMR/codesandbox purposes
 // in a real scenario, you'd probably just do the stuff
@@ -49,7 +50,7 @@ class Modal extends React.Component {
             boxShadow: '0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23)',
             justifySelf: 'center',
           }}
-          onClick={e => e.stopPropagation()}
+          onClick={(e) => e.stopPropagation()}
         >
           {this.props.children}
           <hr />
@@ -75,7 +76,7 @@ test('modal shows the children and a close button', () => {
   expect(screen.getByText('test')).toBeTruthy()
 
   // Act
-  fireEvent.click(screen.getByText(/close/i))
+  userEvent.click(screen.getByText(/close/i))
 
   // Assert
   expect(handleClose).toHaveBeenCalledTimes(1)

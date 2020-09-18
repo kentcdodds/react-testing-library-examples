@@ -8,7 +8,8 @@ import {
 import i18n from 'i18next'
 import Backend from 'i18next-xhr-backend'
 import LanguageDetector from 'i18next-browser-languagedetector'
-import {render as rtlRender, screen, fireEvent} from '@testing-library/react'
+import {render as rtlRender, screen} from '@testing-library/react'
+import userEvent from '@testing-library/user-event'
 
 const resources = {
   en: {
@@ -39,7 +40,7 @@ i18n
     },
   })
 
-const MainView = withTranslation()(props => {
+const MainView = withTranslation()((props) => {
   return (
     <React.Fragment>
       <div className="App-header">
@@ -69,8 +70,8 @@ test('it should test lang', () => {
   const en = screen.getByText('en')
 
   expect(heading).toHaveTextContent('Welcome to React and react-i18next')
-  fireEvent.click(pt)
+  userEvent.click(pt)
   expect(heading).toHaveTextContent('Bem vindo ao React e ao react-i18next')
-  fireEvent.click(en)
+  userEvent.click(en)
   expect(heading).toHaveTextContent('Welcome to React and react-i18next')
 })

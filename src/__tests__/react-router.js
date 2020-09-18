@@ -1,6 +1,13 @@
 import React from 'react'
-import {Link, Route, BrowserRouter as Router, Switch, useLocation} from 'react-router-dom'
-import {render, screen, fireEvent} from '@testing-library/react'
+import {
+  Link,
+  Route,
+  BrowserRouter as Router,
+  Switch,
+  useLocation,
+} from 'react-router-dom'
+import {render, screen} from '@testing-library/react'
+import userEvent from '@testing-library/user-event'
 
 const About = () => <div>You are on the about page</div>
 const Home = () => <div>You are home</div>
@@ -8,10 +15,8 @@ const NoMatch = () => <div>No match</div>
 
 const LocationDisplay = () => {
   const location = useLocation()
-  
-  return (
-    <div data-testid="location-display">{location.pathname}</div>
-  )
+
+  return <div data-testid="location-display">{location.pathname}</div>
 }
 
 function App() {
@@ -44,7 +49,7 @@ test('full app rendering/navigating', () => {
   // normally I'd use a data-testid, but just wanted to show this is also possible
   expect(container.innerHTML).toMatch('You are home')
   const leftClick = {button: 0}
-  fireEvent.click(screen.getByText(/about/i), leftClick)
+  userEvent.click(screen.getByText(/about/i), leftClick)
   // normally I'd use a data-testid, but just wanted to show this is also possible
   expect(container.innerHTML).toMatch('You are on the about page')
 })

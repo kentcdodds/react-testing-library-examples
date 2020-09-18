@@ -1,6 +1,7 @@
 import React from 'react'
 import {CSSTransition} from 'react-transition-group'
-import {render, fireEvent, screen} from '@testing-library/react'
+import {render, screen} from '@testing-library/react'
+import userEvent from '@testing-library/user-event'
 
 // NOTE: True shallow rendering is not possible with React Testing Library
 // This is by design: https://kcd.im/shallow
@@ -45,7 +46,7 @@ test('you can mock things with jest.mock', () => {
     {in: true, ...defaultProps},
     context,
   )
-  fireEvent.click(screen.getByText(/toggle/i))
+  userEvent.click(screen.getByText(/toggle/i))
   expect(CSSTransition).toHaveBeenCalledWith(
     {in: true, ...defaultProps},
     context,

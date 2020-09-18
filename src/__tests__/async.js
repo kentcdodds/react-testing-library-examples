@@ -1,7 +1,8 @@
 import React from 'react'
 import {rest} from 'msw'
 import {setupServer} from 'msw/node'
-import {render, fireEvent, screen} from '@testing-library/react'
+import {render, screen} from '@testing-library/react'
+import userEvent from '@testing-library/user-event'
 import '@testing-library/jest-dom/extend-expect'
 import Fetch from '../fetch'
 
@@ -18,7 +19,7 @@ afterAll(() => server.close())
 test('loads and displays greeting', async () => {
   render(<Fetch url="/greeting" />)
 
-  fireEvent.click(screen.getByText('Load Greeting'))
+  userEvent.click(screen.getByText('Load Greeting'))
 
   await screen.findByRole('heading')
 
@@ -35,7 +36,7 @@ test('handles server error', async () => {
 
   render(<Fetch url="/greeting" />)
 
-  fireEvent.click(screen.getByText('Load Greeting'))
+  userEvent.click(screen.getByText('Load Greeting'))
 
   await screen.findByRole('alert')
 

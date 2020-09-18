@@ -1,7 +1,8 @@
 // watch me write this test in 16 minutes on YouTube:
 //   https://www.youtube.com/watch?v=dxWrHEOD5DU&list=PLV5CVI1eNcJgCrPH_e6d57KRUTiDZgs0u
 import React from 'react'
-import {render, fireEvent, screen} from '@testing-library/react'
+import {render, screen} from '@testing-library/react'
+import userEvent from '@testing-library/user-event'
 import {reportError} from '../utils'
 import {BombButton} from '../component-did-catch'
 
@@ -28,7 +29,7 @@ test('calls reportError and renders that there was a problem', () => {
   render(<BombButton />)
 
   // Act
-  fireEvent.click(screen.getByText('💣'))
+  userEvent.click(screen.getByText('💣'))
 
   // Assert
   expect(reportError).toHaveBeenCalledTimes(1)
