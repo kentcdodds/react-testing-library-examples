@@ -26,7 +26,7 @@ function greetingReducer(state, action) {
   }
 }
 
-export default function Fetch({url}) {
+function FetchGreeting() {
   const [{error, greeting}, dispatch] = useReducer(
     greetingReducer,
     initialState,
@@ -35,7 +35,7 @@ export default function Fetch({url}) {
 
   const fetchGreeting = async () => {
     axios
-      .get(url)
+      .get('/greeting')
       .then((response) => {
         const {data} = response
         const {greeting} = data
@@ -59,3 +59,5 @@ export default function Fetch({url}) {
     </div>
   )
 }
+
+export {FetchGreeting}
