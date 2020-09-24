@@ -5,7 +5,7 @@ notifications:
 node_js: 14
 install: npm install
 script:
-  - npm test:coverage
+  - npm run test:coverage
   - npm run build
 after_success: npx codecov
 branches:
