@@ -54,7 +54,7 @@ const render = (ui, {route = '/'} = {}) => {
 }
 
 test('full app rendering/navigating', () => {
-  renderWithRouter(<App />)
+  render(<App />)
   // normally I'd use a data-testid, but just wanted to show this is also possible
   expect(screen.getByText(/you are home/i)).toBeInTheDocument()
 
@@ -66,7 +66,7 @@ test('full app rendering/navigating', () => {
 })
 
 test('landing on a bad page', () => {
-  renderWithRouter(<App />, {route: '/something-that-does-not-match'})
+  render(<App />, {route: '/something-that-does-not-match'})
 
   // normally I'd use a data-testid, but just wanted to show this is also possible
   expect(screen.getByText(/no match/i)).toBeInTheDocument()
@@ -74,7 +74,7 @@ test('landing on a bad page', () => {
 
 test('rendering a component that uses withRouter', () => {
   const route = '/some-route'
-  renderWithRouter(<LocationDisplay />, {route})
+  render(<LocationDisplay />, {route})
 
   expect(screen.getByTestId('location-display').textContent).toBe(route)
 })
