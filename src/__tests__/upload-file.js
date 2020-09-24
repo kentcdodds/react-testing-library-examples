@@ -1,37 +1,29 @@
-import React, {Component} from 'react'
 import {render, screen} from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
+import React, {useState} from 'react'
 
-class UploadFile extends Component {
-  state = {
-    uploadedFileName: null,
-  }
+const UploadFile = () => {
+  const [uploadedFileName, setUploadedFileName] = useState(null)
 
-  handleUploadFile = (e) => {
-    const file = e.target.files[0]
-    this.setState({
-      uploadedFileName: file.name,
-    })
-  }
+  const handleUploadFile = ({target: {files}}) =>
+    setUploadedFileName(files[0].name)
 
-  render() {
-    return (
-      <div>
-        <label htmlFor="upload-file">Upload File</label>
-        <input
-          type="file"
-          id="upload-file"
-          name="upload-file"
-          onChange={this.handleUploadFile}
-        />
-        {this.state.uploadedFileName && (
-          <div>
-            You have uploaded a file named {this.state.uploadedFileName}
-          </div>
-        )}
-      </div>
-    )
-  }
+  return (
+    <div>
+      <label htmlFor="upload-file">Upload File</label>
+
+      <input
+        id="upload-file"
+        name="upload-file"
+        onChange={handleUploadFile}
+        type="file"
+      />
+
+      {uploadedFileName && (
+        <div>You have uploaded a file named {uploadedFileName}</div>
+      )}
+    </div>
+  )
 }
 
 test('Show the uploaded file name after the user uploads a file', () => {
