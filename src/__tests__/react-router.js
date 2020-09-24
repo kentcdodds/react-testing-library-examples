@@ -47,7 +47,7 @@ const App = () => (
 
 // this is a handy function that I would utilize for any component
 // that relies on the router being in context
-function renderWithRouter(ui, {route = '/'} = {}) {
+const renderWithRouter = (ui, {route = '/'} = {}) => {
   window.history.pushState({}, 'Test page', route)
 
   return render(ui, {wrapper: Router})
