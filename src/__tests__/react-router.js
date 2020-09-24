@@ -1,4 +1,4 @@
-import {render, screen} from '@testing-library/react'
+import {render as rtlRender, screen} from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import React from 'react'
 import {
@@ -47,32 +47,34 @@ const App = () => (
 
 // this is a handy function that I would utilize for any component
 // that relies on the router being in context
-function renderWithRouter(ui, {route = '/'} = {}) {
+const render = (ui, {route = '/'} = {}) => {
   window.history.pushState({}, 'Test page', route)
 
-  return render(ui, {wrapper: Router})
+  return rtlRender(ui, {wrapper: Router})
 }
 
 test('full app rendering/navigating', () => {
-  const {container} = renderWithRouter(<App />)
+  render(<App />)
   // normally I'd use a data-testid, but just wanted to show this is also possible
-  expect(container.innerHTML).toMatch('You are home')
+  expect(screen.getByText(/you are home/i)).toBeInTheDocument()
+
   const leftClick = {button: 0}
   userEvent.click(screen.getByText(/about/i), leftClick)
+
   // normally I'd use a data-testid, but just wanted to show this is also possible
-  expect(container.innerHTML).toMatch('You are on the about page')
+  expect(screen.getByText(/you are on the about page/i)).toBeInTheDocument()
 })
 
 test('landing on a bad page', () => {
-  const {container} = renderWithRouter(<App />, {
-    route: '/something-that-does-not-match',
-  })
+  render(<App />, {route: '/something-that-does-not-match'})
+
   // normally I'd use a data-testid, but just wanted to show this is also possible
-  expect(container.innerHTML).toMatch('No match')
+  expect(screen.getByText(/no match/i)).toBeInTheDocument()
 })
 
 test('rendering a component that uses withRouter', () => {
   const route = '/some-route'
-  renderWithRouter(<LocationDisplay />, {route})
+  render(<LocationDisplay />, {route})
+
   expect(screen.getByTestId('location-display').textContent).toBe(route)
 })
