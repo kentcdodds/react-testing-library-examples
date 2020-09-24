@@ -55,20 +55,16 @@ const render = (ui, {route = '/'} = {}) => {
 
 test('full app rendering/navigating', () => {
   render(<App />)
-  // normally I'd use a data-testid, but just wanted to show this is also possible
   expect(screen.getByText(/you are home/i)).toBeInTheDocument()
 
-  const leftClick = {button: 0}
-  userEvent.click(screen.getByText(/about/i), leftClick)
+  userEvent.click(screen.getByText(/about/i))
 
-  // normally I'd use a data-testid, but just wanted to show this is also possible
   expect(screen.getByText(/you are on the about page/i)).toBeInTheDocument()
 })
 
 test('landing on a bad page', () => {
   render(<App />, {route: '/something-that-does-not-match'})
 
-  // normally I'd use a data-testid, but just wanted to show this is also possible
   expect(screen.getByText(/no match/i)).toBeInTheDocument()
 })
 
@@ -76,5 +72,6 @@ test('rendering a component that uses useLocation', () => {
   const route = '/some-route'
   render(<LocationDisplay />, {route})
 
+  // avoid using test IDs when you can
   expect(screen.getByTestId('location-display')).toHaveTextContent(route)
 })
