@@ -1,3 +1,5 @@
+import {render, screen} from '@testing-library/react'
+import userEvent from '@testing-library/user-event'
 import React from 'react'
 import {
   Link,
@@ -6,8 +8,6 @@ import {
   Switch,
   useLocation,
 } from 'react-router-dom'
-import {render, screen} from '@testing-library/react'
-import userEvent from '@testing-library/user-event'
 
 const About = () => <div>You are on the about page</div>
 const Home = () => <div>You are home</div>
@@ -19,20 +19,29 @@ const LocationDisplay = () => {
   return <div data-testid="location-display">{location.pathname}</div>
 }
 
-function App() {
-  return (
-    <div>
-      <Link to="/">Home</Link>
-      <Link to="/about">About</Link>
-      <Switch>
-        <Route exact path="/" component={Home} />
-        <Route path="/about" component={About} />
-        <Route component={NoMatch} />
-      </Switch>
-      <LocationDisplay />
-    </div>
-  )
-}
+const App = () => (
+  <div>
+    <Link to="/">Home</Link>
+
+    <Link to="/about">About</Link>
+
+    <Switch>
+      <Route exact path="/">
+        <Home />
+      </Route>
+
+      <Route path="/about">
+        <About />
+      </Route>
+
+      <Route>
+        <NoMatch />
+      </Route>
+    </Switch>
+
+    <LocationDisplay />
+  </div>
+)
 
 // Ok, so here's what your tests might look like
 
