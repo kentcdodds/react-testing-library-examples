@@ -54,25 +54,27 @@ function renderWithRouter(ui, {route = '/'} = {}) {
 }
 
 test('full app rendering/navigating', () => {
-  const {container} = renderWithRouter(<App />)
+  renderWithRouter(<App />)
   // normally I'd use a data-testid, but just wanted to show this is also possible
-  expect(container.innerHTML).toMatch('You are home')
+  expect(screen.getByText(/you are home/)).toBeInTheDocument()
+
   const leftClick = {button: 0}
   userEvent.click(screen.getByText(/about/i), leftClick)
+
   // normally I'd use a data-testid, but just wanted to show this is also possible
-  expect(container.innerHTML).toMatch('You are on the about page')
+  expect(screen.getByText(/you are on the about page/)).toBeInTheDocument()
 })
 
 test('landing on a bad page', () => {
-  const {container} = renderWithRouter(<App />, {
-    route: '/something-that-does-not-match',
-  })
+  renderWithRouter(<App />, {route: '/something-that-does-not-match'})
+
   // normally I'd use a data-testid, but just wanted to show this is also possible
-  expect(container.innerHTML).toMatch('No match')
+  expect(screen.getByText(/no match/)).toBeInTheDocument()
 })
 
 test('rendering a component that uses withRouter', () => {
   const route = '/some-route'
   renderWithRouter(<LocationDisplay />, {route})
+
   expect(screen.getByTestId('location-display').textContent).toBe(route)
 })
