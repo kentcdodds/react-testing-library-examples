@@ -1,8 +1,5 @@
-sudo: false
 language: node_js
-cache:
-  directories:
-    - ~/.npm
+cache: npm
 notifications:
   email: false
 node_js: 14
