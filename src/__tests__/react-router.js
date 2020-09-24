@@ -72,9 +72,9 @@ test('landing on a bad page', () => {
   expect(screen.getByText(/no match/i)).toBeInTheDocument()
 })
 
-test('rendering a component that uses withRouter', () => {
+test('rendering a component that uses useLocation', () => {
   const route = '/some-route'
   render(<LocationDisplay />, {route})
 
-  expect(screen.getByTestId('location-display').textContent).toBe(route)
+  expect(screen.getByTestId('location-display')).toHaveTextContent(route)
 })
