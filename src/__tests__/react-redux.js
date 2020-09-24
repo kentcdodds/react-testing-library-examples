@@ -1,8 +1,8 @@
-import React from 'react'
-import {createStore} from 'redux'
-import {Provider, connect} from 'react-redux'
 import {render as rtlRender, screen} from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
+import React from 'react'
+import {Provider, connect} from 'react-redux'
+import {createStore} from 'redux'
 
 // counter.js
 const Counter = ({dispatch, count}) => {
@@ -27,7 +27,7 @@ const Counter = ({dispatch, count}) => {
 }
 
 // normally this would be:
-// export default connect(state => ({count: state.count}))(Counter)
+// export default connect((state) => ({count: state.count}))(Counter)
 // but for this test we'll give it a variable name
 // because we're doing this all in one file
 const ConnectedCounter = connect((state) => ({count: state.count}))(Counter)
@@ -37,7 +37,7 @@ const initialReducerState = {
   count: 0,
 }
 
-function reducer(state = initialReducerState, action) {
+const reducer = (state = initialReducerState, action) => {
   switch (action.type) {
     case 'INCREMENT':
       return {
@@ -67,42 +67,43 @@ function reducer(state = initialReducerState, action) {
 // this is a handy function that I normally make available for all my tests
 // that deal with connected components.
 // you can provide initialState or the entire store that the ui is rendered with
-function render(
+const render = (
   ui,
   {
     initialState = initialReducerState,
     store = createStore(reducer, initialState),
     ...renderOptions
   } = {},
-) {
-  function Wrapper({children}) {
-    return <Provider store={store}>{children}</Provider>
-  }
+) => {
+  const Wrapper = ({children}) => <Provider store={store}>{children}</Provider>
+
   return rtlRender(ui, {wrapper: Wrapper, ...renderOptions})
 }
 
 test('can render with redux with defaults', () => {
   render(<ConnectedCounter />)
+
   userEvent.click(screen.getByText('+'))
+
   expect(screen.getByTestId('count-value')).toHaveTextContent('1')
 })
 
 test('can render with redux with custom initial state', () => {
-  render(<ConnectedCounter />, {
-    initialState: {count: 3},
-  })
+  render(<ConnectedCounter />, {initialState: {count: 3},})
+
   userEvent.click(screen.getByText('-'))
+
   expect(screen.getByTestId('count-value')).toHaveTextContent('2')
 })
 
 test('can render with redux with custom store', () => {
   // this is a silly store that can never be changed
   const store = createStore(() => ({count: 1000}))
-  render(<ConnectedCounter />, {
-    store,
-  })
+  render(<ConnectedCounter />, {store,})
+
   userEvent.click(screen.getByText('+'))
   expect(screen.getByTestId('count-value')).toHaveTextContent('1000')
+
   userEvent.click(screen.getByText('-'))
   expect(screen.getByTestId('count-value')).toHaveTextContent('1000')
 })
