@@ -1,6 +1,6 @@
 import {render as rtlRender, screen} from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
-import React from 'react'
+import * as React from 'react'
 import {Provider, connect} from 'react-redux'
 import {createStore} from 'redux'
 
@@ -89,7 +89,7 @@ test('can render with redux with defaults', () => {
 })
 
 test('can render with redux with custom initial state', () => {
-  render(<ConnectedCounter />, {initialState: {count: 3},})
+  render(<ConnectedCounter />, {initialState: {count: 3}})
 
   userEvent.click(screen.getByText('-'))
 
@@ -99,7 +99,7 @@ test('can render with redux with custom initial state', () => {
 test('can render with redux with custom store', () => {
   // this is a silly store that can never be changed
   const store = createStore(() => ({count: 1000}))
-  render(<ConnectedCounter />, {store,})
+  render(<ConnectedCounter />, {store})
 
   userEvent.click(screen.getByText('+'))
   expect(screen.getByTestId('count-value')).toHaveTextContent('1000')
