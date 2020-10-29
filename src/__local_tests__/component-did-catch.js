@@ -1,6 +1,6 @@
 // watch me write this test in 16 minutes on YouTube:
 //   https://www.youtube.com/watch?v=dxWrHEOD5DU&list=PLV5CVI1eNcJgCrPH_e6d57KRUTiDZgs0u
-import React from 'react'
+import * as React from 'react'
 import {render, screen} from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import {reportError} from '../utils'

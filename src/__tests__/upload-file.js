@@ -1,6 +1,7 @@
 import {render, screen} from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
-import React, {useState} from 'react'
+import * as React from 'react'
+import {useState} from 'react'
 
 const UploadFile = () => {
   const [uploadedFileName, setUploadedFileName] = useState(null)

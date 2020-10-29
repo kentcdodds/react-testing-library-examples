@@ -2,7 +2,8 @@
 // the basic idea is to simply call `render` again and provide the same container
 // that your first call created for you.
 
-import React, {useRef} from 'react'
+import * as React from 'react'
+import {useRef} from 'react'
 import {render, screen} from '@testing-library/react'
 
 let idCounter = 1

@@ -1,5 +1,5 @@
 import 'intl'
-import React from 'react'
+import * as React from 'react'
 import {render as rtlRender, screen} from '@testing-library/react'
 import {IntlProvider, FormattedDate} from 'react-intl'
 

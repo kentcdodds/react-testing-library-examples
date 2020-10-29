@@ -1,4 +1,5 @@
-import React, {useState, useReducer} from 'react'
+import * as React from 'react'
+import {useState, useReducer} from 'react'
 import axios from 'axios'
 
 const initialState = {

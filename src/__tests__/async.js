@@ -1,4 +1,4 @@
-import React from 'react'
+import * as React from 'react'
 import {rest} from 'msw'
 import {setupServer} from 'msw/node'
 import {render, screen} from '@testing-library/react'
