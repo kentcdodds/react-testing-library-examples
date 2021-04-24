@@ -15,12 +15,9 @@ function App() {
           This is an example project of how to test react components using
           react-testing-library and Jest. The idea is that most of the tests
           should be runnable in codesandbox to make it easy to try things out,
-          fork, contribute, etc. However, there will be some tests which do not
-          work in codesandbox and we'll put those in a special folder called
-          __local_tests__. Locally (and in CI) all tests are run via the "test"
-          script, in codesandbox only the tests in __tests__ will be run.
-          If you can make it work in codesandbox then do because it's a lot
-          easier for people to tinker with things in codesandbox.
+          fork, contribute, etc. Either clone the repo locally or run the tests
+          in a terminal in codesandbox (run "npm test") and it should watch your
+          changes in the codesandbox and re-run the tests as you make changes.
         `}</p>
         <p>
           <a href="https://codesandbox.io/s/github/kentcdodds/react-testing-library-examples">
