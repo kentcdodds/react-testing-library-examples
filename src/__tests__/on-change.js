@@ -2,25 +2,15 @@ import * as React from 'react'
 import {render, screen} from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 
-class UpperInput extends React.Component {
-  state = {upper: ''}
-
-  onUpperChange = (e) => {
-    this.setState({upper: e.target.value.toUpperCase()})
-  }
-
-  render() {
-    return (
-      <div>
-        <label htmlFor="upper">Upper</label>
-        <input
-          id="upper"
-          value={this.state.upper}
-          onChange={this.onUpperChange}
-        />
-      </div>
-    )
-  }
+function UpperInput() {
+  const [upper, setUpper] = React.useState('')
+  const handleChange = e => setUpper(e.currentTarget.value.toUpperCase())
+  return (
+    <div>
+      <label htmlFor="upper">Upper</label>
+      <input id="upper" value={upper} onChange={handleChange} />
+    </div>
+  )
 }
 
 test('sets the value to the upper version of the value', () => {

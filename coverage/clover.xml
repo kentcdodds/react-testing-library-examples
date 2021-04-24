@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<coverage generated="1619285067315" clover="3.2.0">
+  <project timestamp="1619285067315" name="All files">
+    <metrics statements="35" coveredstatements="31" conditionals="13" coveredconditionals="12" methods="16" coveredmethods="14" elements="64" coveredelements="57" complexity="0" loc="35" ncloc="35" packages="1" files="6" classes="6"/>
+    <file name="component-did-catch.js" path="/Users/kentcdodds/Desktop/react-testing-library-examples/src/component-did-catch.js">
+      <metrics statements="8" coveredstatements="8" conditionals="4" coveredconditionals="4" methods="5" coveredmethods="5"/>
+      <line num="5" count="1" type="stmt"/>
+      <line num="7" count="1" type="stmt"/>
+      <line num="8" count="1" type="stmt"/>
+      <line num="11" count="3" type="cond" truecount="2" falsecount="0"/>
+      <line num="21" count="2" type="stmt"/>
+      <line num="26" count="1" type="stmt"/>
+      <line num="27" count="1" type="stmt"/>
+      <line num="29" count="2" type="stmt"/>
+    </file>
+    <file name="fetch-greeting.js" path="/Users/kentcdodds/Desktop/react-testing-library-examples/src/fetch-greeting.js">
+      <metrics statements="16" coveredstatements="15" conditionals="9" coveredconditionals="8" methods="5" coveredmethods="5"/>
+      <line num="5" count="1" type="stmt"/>
+      <line num="11" count="2" type="cond" truecount="2" falsecount="1"/>
+      <line num="13" count="1" type="stmt"/>
+      <line num="19" count="1" type="stmt"/>
+      <line num="25" count="0" type="stmt"/>
+      <line num="31" count="5" type="stmt"/>
+      <line num="35" count="5" type="stmt"/>
+      <line num="37" count="5" type="stmt"/>
+      <line num="38" count="2" type="stmt"/>
+      <line num="41" count="1" type="stmt"/>
+      <line num="42" count="1" type="stmt"/>
+      <line num="43" count="1" type="stmt"/>
+      <line num="44" count="1" type="stmt"/>
+      <line num="47" count="1" type="stmt"/>
+      <line num="51" count="5" type="cond" truecount="2" falsecount="0"/>
+      <line num="53" count="5" type="stmt"/>
+    </file>
+    <file name="index.js" path="/Users/kentcdodds/Desktop/react-testing-library-examples/src/index.js">
+      <metrics statements="2" coveredstatements="0" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="0"/>
+      <line num="5" count="0" type="stmt"/>
+      <line num="41" count="0" type="stmt"/>
+    </file>
+    <file name="lazy-component.js" path="/Users/kentcdodds/Desktop/react-testing-library-examples/src/lazy-component.js">
+      <metrics statements="1" coveredstatements="1" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="1"/>
+      <line num="4" count="2" type="stmt"/>
+    </file>
+    <file name="react-context.js" path="/Users/kentcdodds/Desktop/react-testing-library-examples/src/react-context.js">
+      <metrics statements="7" coveredstatements="7" conditionals="0" coveredconditionals="0" methods="3" coveredmethods="3"/>
+      <line num="3" count="1" type="stmt"/>
+      <line num="5" count="1" type="stmt"/>
+      <line num="6" count="2" type="stmt"/>
+      <line num="7" count="2" type="stmt"/>
+      <line num="12" count="1" type="stmt"/>
+      <line num="13" count="3" type="stmt"/>
+      <line num="14" count="3" type="stmt"/>
+    </file>
+    <file name="utils.js" path="/Users/kentcdodds/Desktop/react-testing-library-examples/src/utils.js">
+      <metrics statements="1" coveredstatements="0" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="0"/>
+      <line num="4" count="0" type="stmt"/>
+    </file>
+  </project>
+</coverage>

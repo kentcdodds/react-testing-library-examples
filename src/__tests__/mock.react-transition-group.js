@@ -1,5 +1,5 @@
 import * as React from 'react'
-import {CSSTransition} from 'react-transition-group'
+import {CSSTransition, Transition} from 'react-transition-group'
 import {render, screen} from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 
@@ -11,32 +11,34 @@ function Fade({children, ...props}) {
   )
 }
 
-class HiddenMessage extends React.Component {
-  state = {show: this.props.initialShow || false}
-  toggle = () => {
-    this.setState(({show}) => ({show: !show}))
-  }
-  render() {
-    return (
-      <div>
-        <button onClick={this.toggle}>Toggle</button>
-        <Fade in={this.state.show}>
-          <div>Hello world</div>
-        </Fade>
-      </div>
-    )
-  }
+function HiddenMessage({initialShow = false}) {
+  const [show, setShow] = React.useState(initialShow)
+  const toggle = () => setShow(s => !s)
+  return (
+    <div>
+      <button onClick={toggle}>Toggle</button>
+      <Fade in={show}>
+        <div>Hello world</div>
+      </Fade>
+    </div>
+  )
 }
 
 jest.mock('react-transition-group', () => {
   const FakeTransition = jest.fn(({children}) => children)
-  const FakeCSSTransition = jest.fn((props) =>
-    props.in ? <FakeTransition>{props.children}</FakeTransition> : null,
-  )
+  const FakeCSSTransition = jest.fn()
   return {CSSTransition: FakeCSSTransition, Transition: FakeTransition}
 })
 
+beforeEach(() => {
+  Transition.mockImplementation(({children}) => children)
+  CSSTransition.mockImplementation(props =>
+    props.in ? <Transition>{props.children}</Transition> : null,
+  )
+})
+
 test('you can mock things with jest.mock', () => {
+  // render(<CSSTransition>hi</CSSTransition>)
   render(<HiddenMessage initialShow={true} />)
   expect(screen.getByText('Hello world')).toBeTruthy() // we just care it exists
   // hide the message

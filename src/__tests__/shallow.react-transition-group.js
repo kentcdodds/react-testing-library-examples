@@ -15,26 +15,26 @@ function Fade({children, ...props}) {
   )
 }
 
-class HiddenMessage extends React.Component {
-  state = {show: this.props.initialShow || false}
-  toggle = () => {
-    this.setState(({show}) => ({show: !show}))
-  }
-  render() {
-    return (
-      <div>
-        <button onClick={this.toggle}>Toggle</button>
-        <Fade in={this.state.show}>
-          <div>Hello world</div>
-        </Fade>
-      </div>
-    )
-  }
+function HiddenMessage({initialShow = false}) {
+  const [show, setShow] = React.useState(initialShow)
+  const toggle = () => setShow(s => !s)
+  return (
+    <div>
+      <button onClick={toggle}>Toggle</button>
+      <Fade in={show}>
+        <div>Hello world</div>
+      </Fade>
+    </div>
+  )
 }
 
 jest.mock('react-transition-group', () => {
-  const FakeCSSTransition = jest.fn(() => null)
+  const FakeCSSTransition = jest.fn()
   return {CSSTransition: FakeCSSTransition}
+})
+
+beforeEach(() => {
+  CSSTransition.mockImplementation(() => null)
 })
 
 test('you can mock things with jest.mock', () => {

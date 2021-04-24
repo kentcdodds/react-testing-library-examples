@@ -16,30 +16,26 @@ class ErrorBoundary extends React.Component {
   }
 }
 
-class Bomb extends React.Component {
-  render() {
-    return this['💣'].caboom()
-  }
+function Bomb() {
+  return window['💣'].caboom()
 }
 
-class BombButton extends React.Component {
-  state = {renderBomb: false}
-  handleBombClick = () => this.setState({renderBomb: true})
-  render() {
-    return (
-      <ErrorBoundary>
-        {this.state.renderBomb ? (
-          <Bomb />
-        ) : (
-          <button onClick={this.handleBombClick}>
-            <span role="img" aria-label="bomb">
-              💣
-            </span>
-          </button>
-        )}
-      </ErrorBoundary>
-    )
-  }
+function BombButton() {
+  const [renderBomb, setRenderBomb] = React.useState(false)
+  const handleBombClick = () => setRenderBomb(true)
+  return (
+    <ErrorBoundary>
+      {renderBomb ? (
+        <Bomb />
+      ) : (
+        <button onClick={handleBombClick}>
+          <span role="img" aria-label="bomb">
+            💣
+          </span>
+        </button>
+      )}
+    </ErrorBoundary>
+  )
 }
 
 export {BombButton}
