@@ -21,9 +21,8 @@ test('loads and displays greeting', async () => {
 
   userEvent.click(screen.getByText('Load Greeting'))
 
-  await screen.findByRole('heading')
+  await screen.findByRole('heading', {name: 'hello there'})
 
-  expect(screen.getByRole('heading')).toHaveTextContent('hello there')
   expect(screen.getByRole('button')).toHaveAttribute('disabled')
 })
 
@@ -38,8 +37,7 @@ test('handles server error', async () => {
 
   userEvent.click(screen.getByText('Load Greeting'))
 
-  await screen.findByRole('alert')
+  await screen.findByRole('alert', {name: 'Oops, failed to fetch!'})
 
-  expect(screen.getByRole('alert')).toHaveTextContent('Oops, failed to fetch!')
   expect(screen.getByRole('button')).not.toHaveAttribute('disabled')
 })
