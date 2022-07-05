@@ -1,6 +1,6 @@
-import * as React from 'react'
+import { useRef, useEffect } from 'react'
 import ReactDOM from 'react-dom'
-import {render, screen} from '@testing-library/react'
+import { render, screen } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 
 // this is only here for HMR/codesandbox purposes
@@ -13,53 +13,54 @@ if (!modalRoot) {
   document.body.appendChild(modalRoot)
 }
 
-class Modal extends React.Component {
-  el = document.createElement('div')
-  componentDidMount() {
-    modalRoot.appendChild(this.el)
-  }
-  componentWillUnmount() {
-    modalRoot.removeChild(this.el)
-  }
-  render() {
-    return ReactDOM.createPortal(
+const Modal = ({ onClose, children }) => {
+  const el = useRef(document.createElement('div'));
+
+  useEffect(() => {
+    const elToAppend = el.current;
+    modalRoot.appendChild(elToAppend)
+    return () => {
+      modalRoot.removeChild(elToAppend)
+    }
+  }, []);
+
+  return ReactDOM.createPortal(
+    <div
+      style={{
+        position: 'absolute',
+        top: '0',
+        bottom: '0',
+        left: '0',
+        right: '0',
+        display: 'grid',
+        justifyContent: 'center',
+        alignItems: 'center',
+        backgroundColor: 'rgba(0,0,0,0.3)',
+      }}
+      onClick={onClose}
+    >
       <div
         style={{
-          position: 'absolute',
-          top: '0',
-          bottom: '0',
-          left: '0',
-          right: '0',
-          display: 'grid',
-          justifyContent: 'center',
-          alignItems: 'center',
-          backgroundColor: 'rgba(0,0,0,0.3)',
+          padding: 20,
+          background: '#fff',
+          borderRadius: '2px',
+          display: 'inline-block',
+          minHeight: '300px',
+          margin: '1rem',
+          position: 'relative',
+          minWidth: '300px',
+          boxShadow: '0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23)',
+          justifySelf: 'center',
         }}
-        onClick={this.props.onClose}
+        onClick={(e) => e.stopPropagation()}
       >
-        <div
-          style={{
-            padding: 20,
-            background: '#fff',
-            borderRadius: '2px',
-            display: 'inline-block',
-            minHeight: '300px',
-            margin: '1rem',
-            position: 'relative',
-            minWidth: '300px',
-            boxShadow: '0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23)',
-            justifySelf: 'center',
-          }}
-          onClick={(e) => e.stopPropagation()}
-        >
-          {this.props.children}
-          <hr />
-          <button onClick={this.props.onClose}>Close</button>
-        </div>
-      </div>,
-      this.el,
-    )
-  }
+        {children}
+        <hr />
+        <button onClick={onClose}>Close</button>
+      </div>
+    </div>,
+    el.current,
+  )
 }
 
 test('modal shows the children and a close button', () => {
