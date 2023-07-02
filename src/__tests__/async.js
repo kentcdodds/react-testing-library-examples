@@ -19,7 +19,7 @@ afterAll(() => server.close())
 test('loads and displays greeting', async () => {
   render(<FetchGreeting />)
 
-  userEvent.click(screen.getByText('Load Greeting'))
+  await userEvent.click(screen.getByText('Load Greeting'))
 
   await screen.findByRole('heading', {name: 'hello there'})
 
@@ -36,7 +36,7 @@ test('handles server error',
 
     render(<FetchGreeting />)
 
-    userEvent.click(screen.getByText('Load Greeting'))
+    await userEvent.click(screen.getByText('Load Greeting'))
 
     await screen.queryByRole('alert', {name: 'Oops, failed to fetch!'})
 

@@ -37,7 +37,7 @@ beforeEach(() => {
   CSSTransition.mockImplementation(() => null)
 })
 
-test('you can mock things with jest.mock', () => {
+test('you can mock things with jest.mock', async () => {
   render(<HiddenMessage initialShow={true} />)
   const context = expect.any(Object)
   const children = expect.any(Object)
@@ -46,7 +46,7 @@ test('you can mock things with jest.mock', () => {
     {in: true, ...defaultProps},
     context,
   )
-  userEvent.click(screen.getByText(/toggle/i))
+  await userEvent.click(screen.getByText(/toggle/i))
   expect(CSSTransition).toHaveBeenCalledWith(
     {in: true, ...defaultProps},
     context,

@@ -59,19 +59,20 @@ function render(ui, options) {
     return <I18nextProvider i18n={i18n}>{children}</I18nextProvider>
   }
   return {
+    user: userEvent.setup(),
     ...rtlRender(ui, {wrapper: Wrapper, ...options}),
   }
 }
 
-test('it should test lang', () => {
-  render(<MainView useSuspense={false} />)
+test('it should test lang', async () => {
+  const {user} = render(<MainView useSuspense={false} />)
   const heading = screen.getByRole('heading')
   const pt = screen.getByText('pt')
   const en = screen.getByText('en')
 
   expect(heading).toHaveTextContent('Welcome to React and react-i18next')
-  userEvent.click(pt)
+  await user.click(pt)
   expect(heading).toHaveTextContent('Bem vindo ao React e ao react-i18next')
-  userEvent.click(en)
+  await user.click(en)
   expect(heading).toHaveTextContent('Welcome to React and react-i18next')
 })

@@ -80,30 +80,30 @@ const render = (
   return rtlRender(ui, {wrapper: Wrapper, ...renderOptions})
 }
 
-test('can render with redux with defaults', () => {
+test('can render with redux with defaults', async () => {
   render(<ConnectedCounter />)
 
-  userEvent.click(screen.getByText('+'))
+  await userEvent.click(screen.getByText('+'))
 
   expect(screen.getByTestId('count-value')).toHaveTextContent('1')
 })
 
-test('can render with redux with custom initial state', () => {
+test('can render with redux with custom initial state', async () => {
   render(<ConnectedCounter />, {initialState: {count: 3}})
 
-  userEvent.click(screen.getByText('-'))
+  await userEvent.click(screen.getByText('-'))
 
   expect(screen.getByTestId('count-value')).toHaveTextContent('2')
 })
 
-test('can render with redux with custom store', () => {
+test('can render with redux with custom store', async () => {
   // this is a silly store that can never be changed
   const store = createStore(() => ({count: 1000}))
   render(<ConnectedCounter />, {store})
 
-  userEvent.click(screen.getByText('+'))
+  await userEvent.click(screen.getByText('+'))
   expect(screen.getByTestId('count-value')).toHaveTextContent('1000')
 
-  userEvent.click(screen.getByText('-'))
+  await userEvent.click(screen.getByText('-'))
   expect(screen.getByTestId('count-value')).toHaveTextContent('1000')
 })
