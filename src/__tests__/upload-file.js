@@ -27,14 +27,14 @@ const UploadFile = () => {
   )
 }
 
-test('Show the uploaded file name after the user uploads a file', () => {
+test('Show the uploaded file name after the user uploads a file', async () => {
   render(<UploadFile />)
   const inputEl = screen.getByLabelText(/upload file/i)
 
   const file = new File(['(⌐□_□)'], 'chucknorris.png', {
     type: 'image/png',
   })
-  userEvent.upload(inputEl, file)
+  await userEvent.upload(inputEl, file)
 
   expect(screen.getByText(/chucknorris\.png/)).toBeInTheDocument()
 })

@@ -24,12 +24,12 @@ afterEach(() => {
   console.error.mockRestore()
 })
 
-test('calls reportError and renders that there was a problem', () => {
+test('calls reportError and renders that there was a problem', async () => {
   // Arrange
   render(<BombButton />)
 
   // Act
-  userEvent.click(screen.getByText('💣'))
+  await userEvent.click(screen.getByText('💣'))
 
   // Assert
   expect(reportError).toHaveBeenCalledTimes(1)

@@ -5,9 +5,9 @@
   "keywords": [],
   "main": "src/index.js",
   "dependencies": {
-    "@testing-library/jest-dom": "^5.11.9",
+    "@testing-library/jest-dom": "^5.16.5",
     "@testing-library/react": "^11.2.5",
-    "@testing-library/user-event": "^13.0.10",
+    "@testing-library/user-event": "^14.4.3",
     "axios": "^0.21.1",
     "history": "^5.0.0",
     "i18next": "20.0.0",
@@ -21,8 +21,8 @@
     "react-i18next": "^11.8.10",
     "react-intl": "^5.13.5",
     "react-redux": "^7.2.3",
-    "react-router": "^5.2.0",
-    "react-router-dom": "^5.2.0",
+    "react-router": "^6.0.0",
+    "react-router-dom": "^6.14.1",
     "react-scripts": "^4.0.3",
     "react-transition-group": "^4.4.1",
     "redux": "^4.0.5"

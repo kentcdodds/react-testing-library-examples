@@ -63,7 +63,7 @@ const Modal = ({ onClose, children }) => {
   )
 }
 
-test('modal shows the children and a close button', () => {
+test('modal shows the children and a close button', async () => {
   // Arrange
   const handleClose = jest.fn()
 
@@ -77,7 +77,7 @@ test('modal shows the children and a close button', () => {
   expect(screen.getByText('test')).toBeTruthy()
 
   // Act
-  userEvent.click(screen.getByText(/close/i))
+  await userEvent.click(screen.getByText(/close/i))
 
   // Assert
   expect(handleClose).toHaveBeenCalledTimes(1)

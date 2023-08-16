@@ -4,8 +4,8 @@ import * as React from 'react'
 import {
   Link,
   Route,
+  Routes,
   BrowserRouter as Router,
-  Switch,
   useLocation,
 } from 'react-router-dom'
 
@@ -25,19 +25,13 @@ const App = () => (
 
     <Link to="/about">About</Link>
 
-    <Switch>
-      <Route exact path="/">
-        <Home />
-      </Route>
+    <Routes>
+      <Route path="/" element={<Home />} />
 
-      <Route path="/about">
-        <About />
-      </Route>
+      <Route path="/about" element={<About />} />
 
-      <Route>
-        <NoMatch />
-      </Route>
-    </Switch>
+      <Route path="*" element={<NoMatch />} />
+    </Routes>
 
     <LocationDisplay />
   </div>
@@ -50,14 +44,17 @@ const App = () => (
 const render = (ui, {route = '/'} = {}) => {
   window.history.pushState({}, 'Test page', route)
 
-  return rtlRender(ui, {wrapper: Router})
+  return {
+    user: userEvent.setup(),
+    ...rtlRender(ui, {wrapper: Router}),
+  }
 }
 
-test('full app rendering/navigating', () => {
-  render(<App />)
+test('full app rendering/navigating', async () => {
+  const {user} = render(<App />)
   expect(screen.getByText(/you are home/i)).toBeInTheDocument()
 
-  userEvent.click(screen.getByText(/about/i))
+  await user.click(screen.getByText(/about/i))
 
   expect(screen.getByText(/you are on the about page/i)).toBeInTheDocument()
 })
